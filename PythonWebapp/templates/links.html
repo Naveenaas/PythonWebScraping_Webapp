@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Python Web Page</title>
+    </head>
+    <style>
+        td {
+            padding: 10px; 
+            margin:10px
+        }
+        
+        form {
+            margin:10px 
+        }
+        
+        input {
+            padding:5px
+            width: 100px;
+        }
+        table {
+            counter-reset: rowNumber;
+        }
+
+        table tr > td:first-child {
+            counter-increment: rowNumber;
+        }
+                
+        table tr td:first-child::before {
+            content: counter(rowNumber);
+        }
+        
+    </style>
+    <body>
+        
+        <div class="main"> 
+            <center>
+                <h3>Contents of GoodReeds</h3> 
+             
+            <form action="/add" method="POST">
+                <input id="addname" type="text" name="addname" placeholder="Add Title">
+                <input id="add" type ="submit" value="Add">
+            </form> 
+                
+            <form action="/search" method="POST">
+                <input id="searchname" type="text" name="searchname" placeholder="Search Title">
+                <input id="search" type ="submit" value="Search">
+            </form>    
+            
+            <table border="1">    
+                
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Delete</th>
+                </tr>
+                {% for gReed in gReeds %}
+                <tr>
+                    <td>{{gReed.ids}}</td>
+                    <td>
+                        <form action="/edit" method="POST"  style="display: inline">
+                          <input style="border: 0;" width="200px" type="hidden" value="{{gReed.name}}" name="oldtitle">
+                          <input style="border: 0;" width="200px" type="text" value="{{gReed.name}}" name="newtitle">
+                          <input type="submit" value="EDIT">
+                        </form>
+                    </td>
+                    <td><a href="/delete/{{gReed.name}}">Delete</a></td>
+                 </tr>
+               {% endfor %} 
+                
+            </table>
+                
+           </center>
+  
+       </div>
+            
+    </body>
+   
+</html>
